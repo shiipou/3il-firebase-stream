@@ -67,11 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     QuerySnapshot query = await db.collection('counter').get();
     QueryDocumentSnapshot? document = query.docs.firstOrNull;
     if (document != null) {
-      int counter = document.get('value');
-      await db
-          .collection('counter')
-          .doc(document.id)
-          .update({'value': counter + 1});
+      document.reference.update({'value': FieldValue.increment(1)});
       setState(() {});
     }
   }
